@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="track_vehicle" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <!-- include macros -->
+    <xacro:include filename="macros_track.urdf.xacro" />
+    <xacro:include filename="macros_trackvehicle_parameters.urdf.xacro" />
+
+    <!-- macro -->
+     <xacro:macro name="make_fixed_joint" params="prefix x y z">
+        <joint name="joint_of_${prefix}" type="fixed">
+            <parent link="center_unit"/>
+            <child  link="${prefix}_body"/>
+            <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+    
+    <!-- urdf -->
+
+    <xacro:property name="base_footprint_radius" value="0.001" /> <!-- base_footprint 半径  -->
+    <!-- 底盘 -->
+    <link name="base_footprint">
+        <visual>
+        <geometry>
+            <sphere radius="${base_footprint_radius}" />
+        </geometry>
+        </visual>
+    </link>
+
+    <link name="center_unit">
+        <inertial>
+            <origin
+                xyz="-0.0333242524700413 0.000122558118819012 0.193639591304415"
+                rpy="0 0 0" />
+            <mass value="${mass_of_center_unit}"/>
+            <inertia ixx="${mass_of_center_unit * (width_of_center_unit * width_of_center_unit + height_of_center_unit * height_of_center_unit) / 12}" ixy="0" ixz="0" iyy="${mass_of_center_unit * (height_of_center_unit * height_of_center_unit + length_of_center_unit * length_of_center_unit) / 12}" iyz="0" izz="${mass_of_center_unit * (length_of_center_unit * length_of_center_unit + width_of_center_unit * width_of_center_unit) / 12}" />
+        </inertial>
+        <visual>
+            <!-- <geometry>
+                <box size="${length_of_center_unit} ${width_of_center_unit} ${height_of_center_unit}" />
+            </geometry> -->
+            <origin
+                xyz="0 0 -0.33"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                filename="package://track_vehicle_me/meshes/base_link.STL" />
+            </geometry>
+            <material name="orange">
+                <color rgba="1 0.501960784313725 0 1" />
+            </material>
+        </visual>
+        <collision>
+            <!-- <geometry>
+                <box size="${length_of_center_unit} ${width_of_center_unit} ${height_of_center_unit}" />
+            </geometry> -->
+            <origin
+                xyz="0 0 -0.33"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                filename="package://track_vehicle_me/meshes/base_link.STL" />
+            </geometry>
+            <material name="orange">
+                <color rgba="1 0.501960784313725 0 1" />
+            </material>
+        </collision>
+    </link>
+    <gazebo reference="center_unit" >
+        <material>Gazebo/Orange</material>
+    </gazebo>  
+
+    <joint name="center_unit2base_footprint" type="fixed">
+      <parent link="base_footprint" />
+      <child link="center_unit" />
+      <origin xyz="0 0 0" />
+    </joint>
+
+    <!-- 回转支撑 -->
+    <link name="rotaton_link">
+        <inertial>
+            <origin
+                xyz="0.0394493776508018 -0.12215452665298 0.045409515026938"
+                rpy="0 0 0" />
+            <mass value="695.743973991041" />
+            <inertia
+                ixx="121.26886662093"
+                ixy="0.0623516837333002"
+                ixz="-0.0280872260764976"
+                iyy="121.378083370609"
+                iyz="0.0128430343309495"
+                izz="240.133841993854" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                filename="package://track_vehicle_me/meshes/rotaton_link.STL" />
+            </geometry>
+            <material
+                name="qian_gray">
+                <color
+                rgba="0.6 0.6 0.6 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                filename="package://track_vehicle_me/meshes/rotaton_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <gazebo reference="rotaton_link" >
+        <material>Gazebo/Yellow</material>
+    </gazebo> 
+
+    <!-- continuous -->
+    <joint name="rotation_joint" type="fixed">
+        <origin
+            xyz="-0.0107602695123072 -0.00277733519954498 0.514920307000783"
+            rpy="0 0 -3.1415926535" />
+        <parent link="center_unit" />
+        <child link="rotaton_link" />
+        <axis xyz="0.0208920959377744 0.0053924628350513 -0.999767193736572" />
+    </joint>
+
+    <!-- 传感器支架 -->
+    <link name="sensor_frame_link">
+        <inertial>
+            <origin
+                xyz="0.00148712121446019 0.00467798014592624 -0.0511474077117366"
+                rpy="0 0 0" />
+            <mass value="0.725008108844476" />
+            <inertia
+                ixx="0.00250678347610109"
+                ixy="-5.50247904089754E-06"
+                ixz="5.67501589885545E-07"
+                iyy="0.00136039387853684"
+                iyz="2.06328950956423E-07"
+                izz="0.00216647732433155" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://track_vehicle_me/meshes/sensor_frame_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://track_vehicle_me/meshes/sensor_frame_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <gazebo reference="sensor_frame_link" >
+        <material>Gazebo/Grey</material>
+    </gazebo> 
+
+    <joint name="sensor_frame_joint" type="fixed">
+        <origin
+            xyz="1.93260184071541 1.0657592700152 2.395"
+            rpy="0 0 0.00101365208329129" />
+        <parent link="rotaton_link" />
+        <child link="sensor_frame_link" />
+        <axis xyz="0 0 0" />
+    </joint>
+
+    <!-- 摄像头 -->
+    <link name="camera_link">
+        <inertial>
+            <origin
+                xyz="-0.0177210817824151 -3.50367518693329E-05 -3.33658496387557E-08"
+                rpy="0 0 0" />
+            <mass value="0.0157076902417475" />
+            <inertia
+                ixx="8.12730591714481E-06"
+                ixy="-9.24291112320194E-10"
+                ixz="6.75336336776871E-13"
+                iyy="4.48867607884026E-06"
+                iyz="8.36806360509616E-14"
+                izz="4.91116293742461E-06" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://track_vehicle_me/meshes/camera_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://track_vehicle_me/meshes/camera_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <gazebo reference="camera_link" >
+        <material>Gazebo/SkyBlue</material>
+    </gazebo> 
+
+    <joint name="camera_joint" type="fixed">
+        <origin
+            xyz="0.102556037168136 0.0662421894500709 -0.0340540625722316"
+            rpy="0 0 0" />
+        <parent link="sensor_frame_link" />
+        <child link="camera_link" />
+        <axis xyz="0 0 0" />
+    </joint>
+
+    <!-- 激光雷达 -->
+    <link name="laser_link">
+        <inertial>
+            <origin
+                xyz="-0.0454561794973952 0.00104782282747551 -0.00251829771933121"
+                rpy="0 0 0" />
+            <mass value="0.3275003707686" />
+            <inertia
+                ixx="0.000203090524869223"
+                ixy="3.0541417819294E-06"
+                ixz="-2.52425063878672E-07"
+                iyy="0.000330469926883215"
+                iyz="-1.27501349767921E-07"
+                izz="0.000326289639936637" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://track_vehicle_me/meshes/laser_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://track_vehicle_me/meshes/laser_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <gazebo reference="laser_link" >
+        <material>Gazebo/Green</material>
+    </gazebo> 
+
+    <joint name="laser_joint" type="fixed">
+        <origin
+            xyz="0.0630001040234526 -0.0640220710462298 -0.0396499999979456"
+            rpy="0 0 0" />
+        <parent link="sensor_frame_link" />
+        <child link="laser_link" />
+        <axis xyz="0 0 0" />
+    </joint>
+
+    <!-- IMU -->
+    <link name="IMU_link">
+        <inertial>
+            <origin
+                xyz="0.00211915376134546 -2.7436121967872E-05 0.0102422538485425"
+                rpy="0 0 0" />
+            <mass value="0.00811572741874211" />
+            <inertia
+                ixx="1.85978144619876E-06"
+                ixy="-5.11306295673264E-09"
+                ixz="-1.52228864994841E-08"
+                iyy="2.82368357319466E-06"
+                iyz="5.58043470028311E-10"
+                izz="3.84517193262118E-06" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://track_vehicle_me/meshes/IMU_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.729411764705882 0.356862745098039 0.0235294117647059 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 -0.19"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://track_vehicle_me/meshes/IMU_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="IMU_joint" type="fixed">
+        <!-- <origin
+            xyz="-0.00793832972576121 0.0656152548294828 0.00209999999999999"
+            rpy="0 0 0" /> -->
+        <!-- <parent link="sensor_frame_link" /> -->
+        <origin
+            xyz="0 0 -0.5"
+            rpy="0 0 0.00101365208329092" />
+        <parent
+            link="rotaton_link" />
+        <child link="IMU_link" />
+        <axis xyz="0 0 0" />
+    </joint>
+
+    <gazebo reference="IMU_link" >
+        <material>Gazebo/Red</material>
+        <gravity>true</gravity>
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>200</update_rate>
+            <visualize>true</visualize>
+            <topic>__default_topic__</topic>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                <topicName>imu/data</topicName>
+                <bodyName>IMU_link</bodyName>
+                <updateRateHZ>200.0</updateRateHZ>
+                <gaussianNoise>0.01</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>     
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>IMU_link</frameName>        
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo> 
+
+    <!-- joints between center unit and a main crawler -->
+    <xacro:make_fixed_joint prefix="left_crawler"  x="0.0" y="${width_of_center_unit/2}"      z="${height_of_center_unit-(2*radius_of_crawler)}" />
+    <xacro:make_fixed_joint prefix="right_crawler" x="0.0" y="${-1*(width_of_center_unit/2)}" z="${height_of_center_unit-(2*radius_of_crawler)}" />
+
+    <!-- main crawlers -->
+    <xacro:make_track_body prefix="left_crawler"  mass="${mass_of_crawler}" distance_between_shafts="${distance_between_shafts_of_crawler}" width="${width_of_crawler}" radius="${radius_of_crawler}" x="0" y="${width_of_crawler/2}"      />
+    <xacro:make_track_body prefix="right_crawler" mass="${mass_of_crawler}" distance_between_shafts="${distance_between_shafts_of_crawler}" width="${width_of_crawler}" radius="${radius_of_crawler}" x="0" y="${-1*(width_of_crawler/2)}" />
+
+</robot>

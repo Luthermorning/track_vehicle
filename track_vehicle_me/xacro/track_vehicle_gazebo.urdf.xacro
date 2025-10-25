@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="track_vehicle" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- include -->
+    <xacro:include filename="track_vehicle.urdf.xacro" />    
+    <xacro:include filename="macros_trackvehicle_parameters.urdf.xacro" />
+    <xacro:include filename="$(find gazebo_continuous_track)/urdf_xacro/macros_track_gazebo.urdf.xacro" />
+    <xacro:include filename="$(find gazebo_continuous_track)/urdf_xacro/macros_track_simple_gazebo.urdf.xacro" />
+    <xacro:include filename="$(find track_vehicle_me)/xacro/laser_support.xacro" />
+    <xacro:include filename="$(find track_vehicle_me)/xacro/sensor_test.xacro" />
+
+
+    <!-- macro -->
+    <xacro:property name="track_material">
+        <material>
+            <ambient>0.1 0.1 0.3 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+            <specular>0 0 0 1</specular>
+            <emissive>0 0 0 1</emissive>
+        </material>
+    </xacro:property>
+
+    <xacro:macro name="make_grousers" params="width num_of_grousers">
+        <xacro:insert_block name="track_material" />
+        <pattern>
+            <elements_per_round>${num_of_grousers}</elements_per_round>
+            <element>
+                <xacro:make_box_element pose="0 0 0 0 0 0" size="0.01 ${width-0.01} 0.01">
+                    <xacro:insert_block name="track_material" />
+                </xacro:make_box_element>
+            </element>
+            <element>
+                <xacro:make_polyline_element pose="0 ${(width/2)-0.005} 0 ${pi/2} 0 0">
+                    <polyline>
+                        <point>-0.03 -0.03</point>
+                        <point>-0.01 0.03</point>
+                        <point>0.01 0.03</point>
+                        <point>0.03 -0.03</point>
+                        <height>${width-0.01}</height>
+                    </polyline>
+                    <xacro:insert_block name="track_material" />
+                </xacro:make_polyline_element>
+            </element>
+        </pattern>
+    </xacro:macro>
+
+    <!-- urdf -->
+
+    <!-- left crawler belt -->
+    <xacro:make_track name="left_crawler_track" y="${(width_of_center_unit/2)+(width_of_crawler/2)}" z="${height_of_center_unit-(2*radius_of_crawler)}" mass="${mass_of_crawler}" length="${distance_between_shafts_of_crawler}" radius="${radius_of_crawler}" width="${width_of_crawler-0.01}" parent="left_crawler_body" sprocket_joint="left_crawler_sprocket_axle" pitch_diameter="${pitch_diameter_of_crawler}">
+        <xacro:make_grousers width="${width_of_crawler}" num_of_grousers="42" />
+    </xacro:make_track>
+
+    <!-- right crawler belt -->
+    <xacro:make_track name="right_crawler_track" y="${-1*((width_of_center_unit/2)+(width_of_crawler/2))}" z="${height_of_center_unit-(2*radius_of_crawler)}" mass="${mass_of_crawler}" length="${distance_between_shafts_of_crawler}" radius="${radius_of_crawler}" width="${width_of_crawler-0.01}" parent="right_crawler_body" sprocket_joint="right_crawler_sprocket_axle" pitch_diameter="${pitch_diameter_of_crawler}">
+        <xacro:make_grousers width="${width_of_crawler}" num_of_grousers="42" />
+    </xacro:make_track>
+
+    <!-- ros_control for gazebo -->
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <odometryRate>20.0</odometryRate>
+            <legacyModeNS>false</legacyModeNS>
+        </plugin>
+    </gazebo>
+
+</robot>

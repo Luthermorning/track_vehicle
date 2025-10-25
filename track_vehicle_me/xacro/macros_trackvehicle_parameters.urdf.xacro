@@ -1,0 +1,16 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- center unit -->
+    <xacro:property name="mass_of_center_unit"   value="4000"   />
+    <xacro:property name="length_of_center_unit" value="2.61" />
+    <xacro:property name="width_of_center_unit"  value="2.0" />
+    <xacro:property name="height_of_center_unit" value="0.6" />
+
+    <!-- main crawler -->
+    <xacro:property name="mass_of_crawler"                    value="800.0"     />
+    <xacro:property name="distance_between_shafts_of_crawler" value="4.025"    />
+    <xacro:property name="width_of_crawler"                   value="0.7"    />
+    <xacro:property name="radius_of_crawler"                  value="0.46" />
+    <xacro:property name="pitch_diameter_of_crawler"          value="0.944"  />
+
+</robot>

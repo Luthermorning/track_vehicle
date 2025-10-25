@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot name="sensor_test" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:arg name="gpu" default="true"/>
+    <xacro:property name="gpu" value="$(arg gpu)" />
+    <xacro:arg name="organize_cloud" default="true"/>
+    <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
+
+    <!-- VLP16 激光雷达 -->
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+    <xacro:VLP-16 parent="support" name="velodyne" topic="/velodyne_points" organize_cloud="${organize_cloud}" hz="10" samples="440" gpu="${gpu}">
+          <origin xyz="0 0 ${support_length/2}" rpy="0 0 0" />
+    </xacro:VLP-16>
+
+    <!-- D435i RGB-D相机相关 -->
+    <xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>
+    <xacro:realsense_d435 sensor_name="camera_test" parent_link="sensor_frame_link" rate="30.0">
+        <origin rpy="0 0 0" xyz="0.082556037168136 0.0662421894500709 -0.1840540625722316"/>
+    </xacro:realsense_d435>
+    
+</robot>

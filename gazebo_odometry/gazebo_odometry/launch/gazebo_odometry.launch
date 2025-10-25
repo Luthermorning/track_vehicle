@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node name="gazebo_odometry" pkg="gazebo_odometry" type="gazebo_odometry" output="screen"/>
+
+</launch>
+

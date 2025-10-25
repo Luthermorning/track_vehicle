@@ -1,0 +1,14 @@
+<launch>
+
+    <arg name="checkTerrainConn" default="true"/>
+    <arg name="cameraOffsetZ" default="0"/>
+    <arg name="vehicleX" default="0"/>
+    <arg name="vehicleY" default="0"/>
+
+    <include file="$(find local_planner)/launch/local_planner.launch" >
+        <arg name="cameraOffsetZ" value="$(arg cameraOffsetZ)"/>
+        <arg name="goalX" value="$(arg vehicleX)"/>
+        <arg name="goalY" value="$(arg vehicleY)"/>
+    </include>
+
+</launch>

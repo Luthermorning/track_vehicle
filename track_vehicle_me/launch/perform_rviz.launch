@@ -1,0 +1,15 @@
+<launch>
+    <arg name = "model_xacro" default = "$(find track_vehicle_me)/xacro/track_vehicle_gazebo.urdf.xacro" />
+    <!-- 将 Urdf 文件的内容加载到参数服务器 -->
+    <param name="robot_description" command="$(find xacro)/xacro $(arg model_xacro)" />
+    <!-- Launch  the joint state publisher -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" ></node>
+    <!-- Launch  the robot state publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+        <remap from="/joint_states" to="/track_vehicle_me/joint_states" />
+    </node> -->
+
+    <!-- Loading rviz files -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find track_vehicle_me)/config/show_robot.rviz" />
+</launch>

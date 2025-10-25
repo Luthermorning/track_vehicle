@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="track_vehicle_me">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.0395304856346712 -0.0020991435003859 -0.105253074187938"
+        rpy="0 0 0" />
+      <mass
+        value="5232.08713753638" />
+      <inertia
+        ixx="860.499554229363"
+        ixy="-0.0624601253354951"
+        ixz="-6.60863896386718"
+        iyy="1783.18191327492"
+        iyz="-0.00214289259115599"
+        izz="2561.87014017891" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="rotaton_link">
+    <inertial>
+      <origin
+        xyz="0.0394493776508018 -0.12215452665298 0.045409515026938"
+        rpy="0 0 0" />
+      <mass
+        value="695.743973991041" />
+      <inertia
+        ixx="121.26886662093"
+        ixy="0.0623516837333002"
+        ixz="-0.0280872260764976"
+        iyy="121.378083370609"
+        iyz="0.0128430343309495"
+        izz="240.133841993854" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/rotaton_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/rotaton_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotation_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0107602695123072 -0.00277733519954498 0.514920307000783"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rotaton_link" />
+    <axis
+      xyz="0.0208920959377744 0.0053924628350513 -0.999767193736572" />
+  </joint>
+  <link
+    name="drive_wheel_left_link">
+    <inertial>
+      <origin
+        xyz="-0.00030180607445951 -0.0132072972716393 0.00268216619965811"
+        rpy="0 0 0" />
+      <mass
+        value="478.737512663895" />
+      <inertia
+        ixx="17.6493056426602"
+        ixy="-0.0286679827787652"
+        ixz="-0.0184222709804727"
+        iyy="19.4861867688466"
+        iyz="0.276961980461684"
+        izz="17.5750012522551" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/drive_wheel_left_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/drive_wheel_left_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="drive_wheel_left_joint"
+    type="continuous">
+    <origin
+      xyz="-2.0343615152109 1.28472266480048 -0.168571113255744"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="drive_wheel_left_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="drive_wheel_right_link">
+    <inertial>
+      <origin
+        xyz="8.55976120872626E-05 0.0132072936791885 -0.00269773521597977"
+        rpy="0 0 0" />
+      <mass
+        value="478.737501957883" />
+      <inertia
+        ixx="17.6425556064391"
+        ixy="-0.0113097316769887"
+        ixz="0.0282020883138342"
+        iyy="19.4861866965212"
+        iyz="0.278211924024898"
+        izz="17.5817506549528" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/drive_wheel_right_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/drive_wheel_right_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="drive_wheel_right_joint"
+    type="continuous">
+    <origin
+      xyz="-2.03436151521091 -1.29027733519955 -0.168571113255744"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="drive_wheel_right_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="guide_wheel_right_link">
+    <inertial>
+      <origin
+        xyz="-0.022044585259317 0.0640015794619382 -2.86351405920371E-07"
+        rpy="0 0 0" />
+      <mass
+        value="195.408530066398" />
+      <inertia
+        ixx="6.3218989313616"
+        ixy="-1.76479470702146E-05"
+        ixz="3.204525463584E-06"
+        iyy="10.2199381314209"
+        iyz="-1.10021997284633E-05"
+        izz="6.9655350058442" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/guide_wheel_right_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/guide_wheel_right_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="guide_wheel_right_joint"
+    type="continuous">
+    <origin
+      xyz="1.99063848478909 -1.36177733519954 -0.168571113255749"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="guide_wheel_right_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="guide_wheel_left_link">
+    <inertial>
+      <origin
+        xyz="-0.0220445856176324 -0.0639984200835373 -2.86672215410455E-07"
+        rpy="0 0 0" />
+      <mass
+        value="195.408529731427" />
+      <inertia
+        ixx="6.32189890777276"
+        ixy="-1.76611623955283E-05"
+        ixz="3.20933921306253E-06"
+        iyy="10.2199381218627"
+        iyz="-1.10134723591662E-05"
+        izz="6.96553497912421" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/guide_wheel_left_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://track_vehicle_me/meshes/guide_wheel_left_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="guide_wheel_left_joint"
+    type="continuous">
+    <origin
+      xyz="1.99063848478909 1.35622266480046 -0.168571113255745"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="guide_wheel_left_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+</robot>

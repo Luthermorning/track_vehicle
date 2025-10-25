@@ -1,0 +1,17 @@
+<launch>
+    <param name="robot_description" command="$(find xacro)/xacro $(find track_vehicle_me)/urdf/track_vehicle_base.xacro" />
+    <!-- <param name="robot_description" command="$(find xacro)/xacro $(find track_vehicle_me)/urdf/track_vehicle.urdf.xacro" /> -->
+    
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+    </include>
+
+    <node pkg="gazebo_ros" type="spawn_model" name="model" args="-urdf -model my -param robot_description" />
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+        <remap from="/joint_states" to="/track_vehicle_me/joint_states" />
+    </node>   
+    <!-- <node pkg="track_vehicle_me" type="turn" name="turn" output="screen"/> -->
+    
+</launch>
+    
